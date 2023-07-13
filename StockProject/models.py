@@ -1,8 +1,3 @@
-# from django.contrib.auth.models import User
-# from django.urls import reverse
-
-# User for authentication, and reverse from django.urls to give us greater flexibility with creating URLs.
-
 # This is an auto-generated Django model module.
 # You'll have to do the following manually to clean this up:
 #   * Rearrange models' order
@@ -102,7 +97,6 @@ class Country(models.Model):
 
     class Meta:
         managed = False
-        verbose_name_plural = 'Countries'
         db_table = 'countries'
 
 
@@ -111,7 +105,6 @@ class Currency(models.Model):
 
     class Meta:
         managed = False
-        verbose_name_plural = 'Currencies'
         db_table = 'currencies'
 
 
