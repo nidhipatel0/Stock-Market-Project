@@ -100,6 +100,9 @@ class Country(models.Model):
     name = models.CharField(max_length=225)
     country_phone_code = models.CharField(max_length=3, blank=True, null=True)
 
+    def __str__(self):
+        return self.name
+    
     class Meta:
         managed = False
         verbose_name_plural = 'Countries'
@@ -109,6 +112,9 @@ class Country(models.Model):
 class Currency(models.Model):
     name = models.CharField(max_length=225)
 
+    def __str__(self):
+        return self.name
+    
     class Meta:
         managed = False
         verbose_name_plural = 'Currencies'
@@ -163,6 +169,9 @@ class DjangoSession(models.Model):
 class Exchange(models.Model):
     name = models.CharField(max_length=225)
 
+    def __str__(self):
+        return self.name
+    
     class Meta:
         managed = False
         db_table = 'exchanges'
@@ -189,6 +198,9 @@ class Stock(models.Model):
     name = models.CharField(max_length=225)
     symbol = models.CharField(max_length=225)
 
+    def __str__(self):
+        return self.name
+    
     class Meta:
         managed = False
         db_table = 'stocks'

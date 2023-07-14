@@ -19,7 +19,6 @@ from django.urls import include, path
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('client/', admin.site.urls),
     path('', include('PortApp.urls'))
 
 ]
