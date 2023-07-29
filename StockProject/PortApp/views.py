@@ -3,6 +3,7 @@ from django.http import HttpResponse
 # Create your views here.
 
 
-
-def client(request):
-    return HttpResponse('Hello')
+def intro(request):
+    return HttpResponse('Welcome to Awesome Website')
+def dashboard(request):
+    return HttpResponse('Hello, Guest')

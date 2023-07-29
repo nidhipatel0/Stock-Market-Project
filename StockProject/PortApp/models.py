@@ -175,7 +175,26 @@ class Exchange(models.Model):
     class Meta:
         managed = False
         db_table = 'exchanges'
+position_choices = (
+    ('bought', 'Bought'),
+    ('sold', 'Sold'),
+)
+outcome_choices = (('success','Success'),('failed','Failed'),('neutral','Neutral'))
 
+trade_choices = (('normal','Normal'),('options','Options'),('futures','Futures'))
+
+class Photo(models.Model):
+    photo = models.ImageField(upload_to='photos/')
+    comment = models.CharField(max_length=1000, blank=True, null=True)
+    trade_date = models.DateField(blank=True, null=True)
+    position = models.CharField(max_length=45,choices=position_choices, blank=True, null=True)
+    outcome = models.CharField(max_length=45,choices=outcome_choices, blank=True, null=True)
+    trade_type = models.CharField(max_length=45,choices=trade_choices, blank=True, null=True)
+    stock = models.ForeignKey('Stock', models.DO_NOTHING)
+
+    class Meta:
+        managed = False
+        db_table = 'photos'
 
 class Price(models.Model):
     stock = models.ForeignKey('Stock', models.DO_NOTHING)

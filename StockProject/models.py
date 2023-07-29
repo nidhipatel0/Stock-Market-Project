@@ -77,13 +77,13 @@ class AuthUserUserPermissions(models.Model):
         unique_together = (('user', 'permission'),)
 
 
-class Client(models.Model):
-    country = models.ForeignKey('Country', models.DO_NOTHING)
+class Clients(models.Model):
+    country = models.ForeignKey('Countries', models.DO_NOTHING)
     first_name = models.CharField(max_length=45)
     last_name = models.CharField(max_length=45)
     email = models.CharField(unique=True, max_length=60)
-    registration_date = models.PositiveIntegerField()
-    last_login = models.PositiveIntegerField()
+    registration_date = models.DateField()
+    last_login = models.DateField()
     phone_number = models.PositiveIntegerField()
 
     class Meta:
@@ -91,7 +91,7 @@ class Client(models.Model):
         db_table = 'clients'
 
 
-class Country(models.Model):
+class Countries(models.Model):
     name = models.CharField(max_length=225)
     country_phone_code = models.CharField(max_length=3, blank=True, null=True)
 
@@ -100,7 +100,7 @@ class Country(models.Model):
         db_table = 'countries'
 
 
-class Currency(models.Model):
+class Currencies(models.Model):
     name = models.CharField(max_length=225)
 
     class Meta:
@@ -153,7 +153,7 @@ class DjangoSession(models.Model):
         db_table = 'django_session'
 
 
-class Exchange(models.Model):
+class Exchanges(models.Model):
     name = models.CharField(max_length=225)
 
     class Meta:
@@ -161,8 +161,22 @@ class Exchange(models.Model):
         db_table = 'exchanges'
 
 
-class Price(models.Model):
-    stock = models.ForeignKey('Stock', models.DO_NOTHING)
+class Photos(models.Model):
+    photo = models.TextField()
+    comment = models.CharField(max_length=1000, blank=True, null=True)
+    trade_date = models.DateField(blank=True, null=True)
+    position = models.CharField(max_length=45, blank=True, null=True)
+    outcome = models.CharField(max_length=45, blank=True, null=True)
+    trade_type = models.CharField(max_length=45, blank=True, null=True)
+    stock = models.ForeignKey('Stocks', models.DO_NOTHING)
+
+    class Meta:
+        managed = False
+        db_table = 'photos'
+
+
+class Prices(models.Model):
+    stock = models.ForeignKey('Stocks', models.DO_NOTHING)
     timestamp = models.DateTimeField()
     open = models.PositiveIntegerField()
     low = models.PositiveIntegerField()
@@ -175,10 +189,10 @@ class Price(models.Model):
         db_table = 'prices'
 
 
-class Stock(models.Model):
-    country = models.ForeignKey(Country, models.DO_NOTHING)
-    currency = models.ForeignKey(Currency, models.DO_NOTHING)
-    exchange = models.ForeignKey(Exchange, models.DO_NOTHING)
+class Stocks(models.Model):
+    country = models.ForeignKey(Countries, models.DO_NOTHING)
+    currency = models.ForeignKey(Currencies, models.DO_NOTHING)
+    exchange = models.ForeignKey(Exchanges, models.DO_NOTHING)
     name = models.CharField(max_length=225)
     symbol = models.CharField(max_length=225)
 
