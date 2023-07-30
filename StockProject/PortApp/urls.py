@@ -1,7 +1,7 @@
 from django.urls import path
 #from django.views.generic import RedirectView
 from . import views
-from PortApp.models import Client
+from .models import Client
 
 urlpatterns = [
     path('upload/', views.upload_photo, name='upload_photo'),

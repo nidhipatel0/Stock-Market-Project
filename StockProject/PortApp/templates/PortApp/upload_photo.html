@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!-- <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -7,10 +7,16 @@
 </head>
 <body>
   <form method="post" enctype="multipart/form-data">
-    <input type="'file" name="PhotoFrom" multiple>
+    <input type="file" name="PhotoFrom" multiple>
     {% csrf_token %}
     {{ form.as_p }}
     <button type="submit">Upload Photo</button>
   </form>
 </body>
-</html>
+</html> -->
+<form method="post" enctype="multipart/form-data">
+    <input type="file" name="PhotoFrom" multiple>
+      {% csrf_token %}
+      {{ form.as_p }}
+      <button type="submit">Upload Photo</button>
+    </form>
