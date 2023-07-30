@@ -176,14 +176,14 @@ class Exchange(models.Model):
         managed = False
         db_table = 'exchanges'
 position_choices = (
-    ('bought', 'Bought'),
-    ('sold', 'Sold'),
+    ('buy', 'Buy'),
+    ('sell', 'Sell'),
 )
 outcome_choices = (('success','Success'),('failed','Failed'),('neutral','Neutral'))
 
 trade_choices = (('normal','Normal'),('options','Options'),('futures','Futures'))
 
-class Photo(models.Model):
+class Photo(models.Model):   
     photo = models.ImageField(upload_to='photos/')
     comment = models.CharField(max_length=1000, blank=True, null=True)
     trade_date = models.DateField(blank=True, null=True)

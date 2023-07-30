@@ -4,7 +4,11 @@ from . import views
 from PortApp.models import Client
 
 urlpatterns = [
+    path('upload/', views.upload_photo, name='upload_photo'),
     path('',views.dashboard,name = 'dashboard'),
+    
+    #path('/admin/PortApp/photo/add',views.upload_photo,name = 'upload_photo'),
+
     #path('client', views.client, name='client'),
     #path('client',Client,name = 'client')
     #path('client/client', RedirectView.as_view(url='client', permanent=False)),
