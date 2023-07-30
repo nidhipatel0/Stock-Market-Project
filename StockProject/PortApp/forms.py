@@ -15,13 +15,17 @@ from .models import Photo, Stock
 #     class Meta:
 #         model = Photo
 #         fields = ['photo', 'comment','stock']
-class StockForm(forms.ModelForm):
-    class Meta:
-        model = Stock
-        fields= [
-            'name'
-        ]
+# class StockForm(forms.ModelForm):
+#     class Meta:
+#         model = Stock
+#         fields= [
+#             'name'
+#         ]
 
+# all = Stock.objects.all()
+# pk = []
+# for b in all:
+#     pk.append(b)
 class PhotoForm(forms.ModelForm):
     photo = forms.ImageField(
         label = "Photo",
@@ -29,5 +33,6 @@ class PhotoForm(forms.ModelForm):
     )
 
     class Meta:
+        
         model = Photo
-        fields = ("photo",)
+        fields = ['photo',"comment","stock"]
