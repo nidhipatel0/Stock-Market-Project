@@ -1,6 +1,20 @@
 from django import forms
 from .models import Photo, Stock
 
+
+class PhotoForm(forms.ModelForm):
+    # photo = forms.ImageField(
+    #     label = "Photo",
+    #     widget=forms.ClearableFileInput(attrs={"mutiple":True}),
+    # )
+
+    class Meta:
+        
+        model = Photo
+        fields = ["comment","stock",'portfolio_category']
+
+
+
 # class MultipleFileInput(forms.FileInput):
 #     def __init__(self, attrs=None):
 #         attrs = attrs or {}
@@ -25,14 +39,4 @@ from .models import Photo, Stock
 # all = Stock.objects.all()
 # pk = []
 # for b in all:
-#     pk.append(b)
-class PhotoForm(forms.ModelForm):
-    photo = forms.ImageField(
-        label = "Photo",
-        widget=forms.ClearableFileInput(attrs={"mutiple":True}),
-    )
-
-    class Meta:
-        
-        model = Photo
-        fields = ['photo',"comment","stock"]
+#     pk.append(b)        

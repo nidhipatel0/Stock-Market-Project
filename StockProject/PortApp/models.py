@@ -190,8 +190,10 @@ class Photo(models.Model):
     position = models.CharField(max_length=45,choices=position_choices, blank=True, null=True)
     outcome = models.CharField(max_length=45,choices=outcome_choices, blank=True, null=True)
     trade_type = models.CharField(max_length=45,choices=trade_choices, blank=True, null=True)
-    stock = models.ForeignKey('Stock', on_delete=models.CASCADE)
+    stock = models.ForeignKey('Stock',  on_delete=models.SET_NULL, null=True, blank=True)
+    portfolio_category = models.CharField(max_length=100, blank=True, null=True)
 
+    
     class Meta:
         managed = False
         db_table = 'photos'

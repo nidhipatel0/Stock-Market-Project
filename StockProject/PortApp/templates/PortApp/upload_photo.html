@@ -15,7 +15,8 @@
 </body>
 </html> -->
 <form method="post" enctype="multipart/form-data">
-    <input type="file" name="PhotoFrom" multiple>
+  <label>Upload images</label>
+  <input required name ='images' type="file" multiple>
       {% csrf_token %}
       {{ form.as_p }}
       <button type="submit">Upload Photo</button>

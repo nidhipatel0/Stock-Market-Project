@@ -17,13 +17,13 @@ def upload_photo(request):
             f = form.save(commit=False)
             f.user = request.user
             f.save()
-            for i in files:
-                # print(f)
-                # Photo.objects.create(stock=f, photo=i)
-                uploaded_image = PhotoForm(i)
-                #up = PhotoForm('ITC')
-                uploaded_image.save()
-                #up.save()
+            
+            for image in files:
+                p = Photo.objects.create(
+                    comment=form['comment'],
+                    stock=form['stock'],
+                    photo=image,
+                )
     
     #context = {'form': StockForm()}
     # else:
@@ -61,11 +61,17 @@ def upload_photo(request):
 def intro(request):
     return HttpResponse('Welcome to Awesome Website')
 def dashboard(request):
+    o = Photo.objects.get('comment,stock')
 
-    img = ImageGrab.grabclipboard()
+    context = {'comment': Photo.comment}
+    return render(request, "PortApp/show_photo.html", context)
+
+
+
+    #img = ImageGrab.grabclipboard()
     # or ImageGrab.grab() to grab the whole screen!
 
-    return HttpResponse(img)
+   # return HttpResponse(img)
     #return HttpResponse('Hello, Guest')
 
 # def upload_photo(request):
