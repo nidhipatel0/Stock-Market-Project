@@ -1,5 +1,5 @@
 from django import forms
-from .models import Photo, Stock
+from .models import Photo
 
 
 class PhotoForm(forms.ModelForm):
@@ -7,11 +7,11 @@ class PhotoForm(forms.ModelForm):
     #     label = "Photo",
     #     widget=forms.ClearableFileInput(attrs={"mutiple":True}),
     # )
-
+    #i = Photo._meta.pk.name
     class Meta:
-        
+        i = Photo._meta.pk.name
         model = Photo
-        fields = ["comment","stock",'portfolio_category']
+        fields = [Photo.photo]
 
 
 

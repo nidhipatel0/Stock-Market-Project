@@ -1,8 +1,3 @@
-# from django.contrib.auth.models import User
-# from django.urls import reverse
-
-# User for authentication, and reverse from django.urls to give us greater flexibility with creating URLs.
-
 # This is an auto-generated Django model module.
 # You'll have to do the following manually to clean this up:
 #   * Rearrange models' order
@@ -82,13 +77,13 @@ class AuthUserUserPermissions(models.Model):
         unique_together = (('user', 'permission'),)
 
 
-class Client(models.Model):
-    country = models.ForeignKey('Country', models.DO_NOTHING)
+class Clients(models.Model):
+    country = models.ForeignKey('Countries', models.DO_NOTHING)
     first_name = models.CharField(max_length=45)
     last_name = models.CharField(max_length=45)
     email = models.CharField(unique=True, max_length=60)
-    registration_date = models.PositiveIntegerField()
-    last_login = models.PositiveIntegerField()
+    registration_date = models.DateField()
+    last_login = models.DateField()
     phone_number = models.PositiveIntegerField()
 
     class Meta:
@@ -96,28 +91,20 @@ class Client(models.Model):
         db_table = 'clients'
 
 
-class Country(models.Model):
+class Countries(models.Model):
     name = models.CharField(max_length=225)
     country_phone_code = models.CharField(max_length=3, blank=True, null=True)
 
-    def __str__(self):
-        return self.name
-    
     class Meta:
         managed = False
-        verbose_name_plural = 'Countries'
         db_table = 'countries'
 
 
-class Currency(models.Model):
+class Currencies(models.Model):
     name = models.CharField(max_length=225)
 
-    def __str__(self):
-        return self.name
-    
     class Meta:
         managed = False
-        verbose_name_plural = 'Currencies'
         db_table = 'currencies'
 
 
@@ -166,40 +153,28 @@ class DjangoSession(models.Model):
         db_table = 'django_session'
 
 
-class Exchange(models.Model):
+class Exchanges(models.Model):
     name = models.CharField(max_length=225)
 
-    def __str__(self):
-        return self.name
-    
     class Meta:
         managed = False
         db_table = 'exchanges'
-position_choices = (
-    ('buy', 'Buy'),
-    ('sell', 'Sell'),
-)
-outcome_choices = (('success','Success'),('failed','Failed'),('neutral','Neutral'))
 
-trade_choices = (('normal','Normal'),('options','Options'),('futures','Futures'))
 
-class Photo(models.Model):   
-    photo = models.ImageField(upload_to='photos/')
-    comment = models.CharField(max_length=1000, blank=True, null=True)
-    trade_date = models.DateField(blank=True, null=True)
-    position = models.CharField(max_length=45,choices=position_choices, blank=True, null=True)
-    outcome = models.CharField(max_length=45,choices=outcome_choices, blank=True, null=True)
-    trade_type = models.CharField(max_length=45,choices=trade_choices, blank=True, null=True)
-    stock = models.ForeignKey('Stock',  on_delete=models.SET_NULL, null=True, blank=True)
-    portfolio_category = models.CharField(max_length=100, blank=True, null=True)
+class Photos(models.Model):
+    id = models.IntegerField(primary_key=True)
+    photo =  models.ImageField(null=False,blank=False)
+    photo_date = models.DateField()
+    photo_comment = models.CharField(max_length=1000, blank=True, null=True)
+    trade = models.ForeignKey('Trades', models.DO_NOTHING)
 
-    
     class Meta:
         managed = False
         db_table = 'photos'
 
-class Price(models.Model):
-    stock = models.ForeignKey('Stock', models.DO_NOTHING)
+
+class Prices(models.Model):
+    stock = models.ForeignKey('Stocks', models.DO_NOTHING)
     timestamp = models.DateTimeField()
     open = models.PositiveIntegerField()
     low = models.PositiveIntegerField()
@@ -212,16 +187,36 @@ class Price(models.Model):
         db_table = 'prices'
 
 
-class Stock(models.Model):
-    country = models.ForeignKey(Country, models.DO_NOTHING)
-    currency = models.ForeignKey(Currency, models.DO_NOTHING)
-    exchange = models.ForeignKey(Exchange, models.DO_NOTHING)
+class Stocks(models.Model):
+    country = models.ForeignKey(Countries, models.DO_NOTHING)
+    currency = models.ForeignKey(Currencies, models.DO_NOTHING)
+    exchange = models.ForeignKey(Exchanges, models.DO_NOTHING)
     name = models.CharField(max_length=225)
     symbol = models.CharField(max_length=225)
 
-    def __str__(self):
-        return self.name
-    
     class Meta:
         managed = False
         db_table = 'stocks'
+
+position_choices = (
+    ('buy', 'Buy'),
+    ('sell', 'Sell'),
+)
+outcome_choices = (('success','Success'),('failed','Failed'),('neutral','Neutral'))
+
+trade_choices = (('normal','Normal'),('options','Options'),('futures','Futures'))
+
+
+class Trades(models.Model):
+    trade_comment = models.CharField(max_length=1000, blank=True, null=True)
+    trade_date = models.DateField()
+    position = models.CharField(max_length=45,choices=position_choices, blank=True, null=True)
+    outcome = models.CharField(max_length=45,choices=outcome_choices, blank=True, null=True)
+    trade_type = models.CharField(max_length=45,choices=trade_choices, blank=True, null=True)
+    stock = models.ForeignKey(Stocks, models.DO_NOTHING)
+    #stock = models.ForeignKey('Stock',  on_delete=models.SET_NULL, null=True, blank=True)
+    expiry = models.DateField(blank=True, null=True)
+
+    class Meta:
+        managed = False
+        db_table = 'trades'

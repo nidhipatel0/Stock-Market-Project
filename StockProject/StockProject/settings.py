@@ -82,7 +82,7 @@ WSGI_APPLICATION = 'StockProject.wsgi.application'
 DATABASES =  {
     "default": {
         "ENGINE": "django.db.backends.mysql",
-        "NAME": "stockdb",
+        "NAME": "s",
         "USER": "root",
         "PASSWORD": "guluGULU(96",
         "HOST": "127.0.0.1",
@@ -134,10 +134,15 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
 STATIC_URL = 'static/'
+MEDIA_URL = '/images/'
+
+STATICFILE_DIR = [
+    BASE_DIR / 'static'
+]
+
+MEDIA_ROOT = BASE_DIR / 'static/images'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-
-MEDIA_ROOT = BASE_DIR /'media'

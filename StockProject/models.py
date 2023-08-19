@@ -162,13 +162,11 @@ class Exchanges(models.Model):
 
 
 class Photos(models.Model):
+    id = models.IntegerField(primary_key=True)
     photo = models.TextField()
-    comment = models.CharField(max_length=1000, blank=True, null=True)
-    trade_date = models.DateField(blank=True, null=True)
-    position = models.CharField(max_length=45, blank=True, null=True)
-    outcome = models.CharField(max_length=45, blank=True, null=True)
-    trade_type = models.CharField(max_length=45, blank=True, null=True)
-    stock = models.ForeignKey('Stocks', models.DO_NOTHING)
+    photo_date = models.DateField()
+    photo_comment = models.CharField(max_length=1000, blank=True, null=True)
+    trade = models.ForeignKey('Trades', models.DO_NOTHING)
 
     class Meta:
         managed = False
@@ -199,3 +197,26 @@ class Stocks(models.Model):
     class Meta:
         managed = False
         db_table = 'stocks'
+
+position_choices = (
+    ('buy', 'Buy'),
+    ('sell', 'Sell'),
+)
+outcome_choices = (('success','Success'),('failed','Failed'),('neutral','Neutral'))
+
+trade_choices = (('normal','Normal'),('options','Options'),('futures','Futures'))
+
+
+class Trades(models.Model):
+    trade_comment = models.CharField(max_length=1000, blank=True, null=True)
+    trade_date = models.DateField()
+    position = models.CharField(max_length=45,choices=position_choices, blank=True, null=True)
+    outcome = models.CharField(max_length=45,choices=outcome_choices, blank=True, null=True)
+    trade_type = models.CharField(max_length=45,choices=trade_choices, blank=True, null=True)
+    stock = models.ForeignKey(Stocks, on_delete=models.SET_NULL)
+    #stock = models.ForeignKey('Stock',  on_delete=models.SET_NULL, null=True, blank=True)
+    expiry = models.DateField(blank=True, null=True)
+
+    class Meta:
+        managed = False
+        db_table = 'trades'

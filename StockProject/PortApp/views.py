@@ -3,15 +3,18 @@ from django.http import HttpResponse
 # Create your views here.
 
 from PIL import ImageGrab
-from .forms import PhotoForm
+#from .forms import PhotoForm
 #, StockForm
-from .models import Photo
+from .models import Photos
 
 def upload_photo(request):
     if request.method == 'POST':
         #form = StockForm(request.POST)
         form = PhotoForm(request.POST,request.FILES)
-        files = request.FILES.getlist("photo")
+        comment_value = request.POST.get('comment','')
+        stock_value = request.POST.get('stock','')
+        port_value = request.POST.get('portfolio_category','')
+        files = request.FILES.getlist("images")
         #s = request.POST.get('Stock','')
         if form.is_valid():
             f = form.save(commit=False)
@@ -20,10 +23,11 @@ def upload_photo(request):
             
             for image in files:
                 p = Photo.objects.create(
-                    comment=form['comment'],
-                    stock=form['stock'],
+                    comment = f"{comment_value}",
+                    stock_id=f'{stock_value}',
                     photo=image,
-                )
+                    portfolio_category=f'{port_value}',
+                    )
     
     #context = {'form': StockForm()}
     # else:
@@ -33,9 +37,21 @@ def upload_photo(request):
 
 
 
+def tradePhoto(request):
 
 
 
+
+    context={}
+    return render(request,'PortApp/trade_photo.html',context)
+
+def addPhoto(request):
+
+
+
+
+    context={}
+    return render(request,'PortApp/add.html',context)
 
 # from django.shortcuts import render, redirect
 # from .forms import PhotoForm
@@ -61,9 +77,9 @@ def upload_photo(request):
 def intro(request):
     return HttpResponse('Welcome to Awesome Website')
 def dashboard(request):
-    o = Photo.objects.get('comment,stock')
+    #o = Photo.objects.get('comment,stock')
 
-    context = {'comment': Photo.comment}
+    context = {'categories': Photo.portfolio_category,'photo': Photo.photo}
     return render(request, "PortApp/show_photo.html", context)
 
 

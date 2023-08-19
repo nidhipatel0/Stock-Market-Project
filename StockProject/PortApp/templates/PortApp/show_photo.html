@@ -5,7 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
 </head>
+<h1>{{ photo.title }}</h1>
+<img class="image-thumbail" src="{{photo.image.url}}" alt="Card image cap">
+<a href="{% url 'Photo' Photo.id %}" class="btn btn-outline-dark btn-sm m-1">View</a>
 <body>
-    comment
+    p
 </body>
 </html>
