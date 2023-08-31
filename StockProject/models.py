@@ -8,75 +8,6 @@
 from django.db import models
 
 
-class AuthGroup(models.Model):
-    name = models.CharField(unique=True, max_length=150)
-
-    class Meta:
-        managed = False
-        db_table = 'auth_group'
-
-
-class AuthGroupPermissions(models.Model):
-    id = models.BigAutoField(primary_key=True)
-    group = models.ForeignKey(AuthGroup, models.DO_NOTHING)
-    permission = models.ForeignKey('AuthPermission', models.DO_NOTHING)
-
-    class Meta:
-        managed = False
-        db_table = 'auth_group_permissions'
-        unique_together = (('group', 'permission'),)
-
-
-class AuthPermission(models.Model):
-    name = models.CharField(max_length=255)
-    content_type = models.ForeignKey('DjangoContentType', models.DO_NOTHING)
-    codename = models.CharField(max_length=100)
-
-    class Meta:
-        managed = False
-        db_table = 'auth_permission'
-        unique_together = (('content_type', 'codename'),)
-
-
-class AuthUser(models.Model):
-    password = models.CharField(max_length=128)
-    last_login = models.DateTimeField(blank=True, null=True)
-    is_superuser = models.IntegerField()
-    username = models.CharField(unique=True, max_length=150)
-    first_name = models.CharField(max_length=150)
-    last_name = models.CharField(max_length=150)
-    email = models.CharField(max_length=254)
-    is_staff = models.IntegerField()
-    is_active = models.IntegerField()
-    date_joined = models.DateTimeField()
-
-    class Meta:
-        managed = False
-        db_table = 'auth_user'
-
-
-class AuthUserGroups(models.Model):
-    id = models.BigAutoField(primary_key=True)
-    user = models.ForeignKey(AuthUser, models.DO_NOTHING)
-    group = models.ForeignKey(AuthGroup, models.DO_NOTHING)
-
-    class Meta:
-        managed = False
-        db_table = 'auth_user_groups'
-        unique_together = (('user', 'group'),)
-
-
-class AuthUserUserPermissions(models.Model):
-    id = models.BigAutoField(primary_key=True)
-    user = models.ForeignKey(AuthUser, models.DO_NOTHING)
-    permission = models.ForeignKey(AuthPermission, models.DO_NOTHING)
-
-    class Meta:
-        managed = False
-        db_table = 'auth_user_user_permissions'
-        unique_together = (('user', 'permission'),)
-
-
 class Clients(models.Model):
     country = models.ForeignKey('Countries', models.DO_NOTHING)
     first_name = models.CharField(max_length=45)
@@ -106,51 +37,6 @@ class Currencies(models.Model):
     class Meta:
         managed = False
         db_table = 'currencies'
-
-
-class DjangoAdminLog(models.Model):
-    action_time = models.DateTimeField()
-    object_id = models.TextField(blank=True, null=True)
-    object_repr = models.CharField(max_length=200)
-    action_flag = models.PositiveSmallIntegerField()
-    change_message = models.TextField()
-    content_type = models.ForeignKey('DjangoContentType', models.DO_NOTHING, blank=True, null=True)
-    user = models.ForeignKey(AuthUser, models.DO_NOTHING)
-
-    class Meta:
-        managed = False
-        db_table = 'django_admin_log'
-
-
-class DjangoContentType(models.Model):
-    app_label = models.CharField(max_length=100)
-    model = models.CharField(max_length=100)
-
-    class Meta:
-        managed = False
-        db_table = 'django_content_type'
-        unique_together = (('app_label', 'model'),)
-
-
-class DjangoMigrations(models.Model):
-    id = models.BigAutoField(primary_key=True)
-    app = models.CharField(max_length=255)
-    name = models.CharField(max_length=255)
-    applied = models.DateTimeField()
-
-    class Meta:
-        managed = False
-        db_table = 'django_migrations'
-
-
-class DjangoSession(models.Model):
-    session_key = models.CharField(primary_key=True, max_length=40)
-    session_data = models.TextField()
-    expire_date = models.DateTimeField()
-
-    class Meta:
-        managed = False
-        db_table = 'django_session'
 
 
 class Exchanges(models.Model):
@@ -198,23 +84,15 @@ class Stocks(models.Model):
         managed = False
         db_table = 'stocks'
 
-position_choices = (
-    ('buy', 'Buy'),
-    ('sell', 'Sell'),
-)
-outcome_choices = (('success','Success'),('failed','Failed'),('neutral','Neutral'))
-
-trade_choices = (('normal','Normal'),('options','Options'),('futures','Futures'))
-
 
 class Trades(models.Model):
+    id = models.CharField(primary_key=True, max_length=100)
     trade_comment = models.CharField(max_length=1000, blank=True, null=True)
     trade_date = models.DateField()
-    position = models.CharField(max_length=45,choices=position_choices, blank=True, null=True)
-    outcome = models.CharField(max_length=45,choices=outcome_choices, blank=True, null=True)
-    trade_type = models.CharField(max_length=45,choices=trade_choices, blank=True, null=True)
-    stock = models.ForeignKey(Stocks, on_delete=models.SET_NULL)
-    #stock = models.ForeignKey('Stock',  on_delete=models.SET_NULL, null=True, blank=True)
+    position = models.CharField(max_length=45)
+    outcome = models.CharField(max_length=45, blank=True, null=True)
+    trade_type = models.CharField(max_length=45)
+    stock = models.ForeignKey(Stocks, models.DO_NOTHING)
     expiry = models.DateField(blank=True, null=True)
 
     class Meta:

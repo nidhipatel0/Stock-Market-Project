@@ -45,7 +45,7 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
-    'corsheaders.middleware.CorsMiddleware',
+    #'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -81,14 +81,6 @@ WSGI_APPLICATION = 'StockProject.wsgi.application'
 
 DATABASES =  {
     "default": {
-        "ENGINE": "django.db.backends.mysql",
-        "NAME": "s",
-        "USER": "root",
-        "PASSWORD": "guluGULU(96",
-        "HOST": "127.0.0.1",
-        "PORT": "3306",
-    },
-    'stockdb': {
         "ENGINE": "django.db.backends.mysql",
         "NAME": "stockdb",
         "USER": "root",

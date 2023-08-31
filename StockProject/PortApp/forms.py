@@ -2,16 +2,16 @@ from django import forms
 from .models import Photo
 
 
-class PhotoForm(forms.ModelForm):
-    # photo = forms.ImageField(
-    #     label = "Photo",
-    #     widget=forms.ClearableFileInput(attrs={"mutiple":True}),
-    # )
-    #i = Photo._meta.pk.name
-    class Meta:
-        i = Photo._meta.pk.name
-        model = Photo
-        fields = [Photo.photo]
+# class PhotoForm(forms.ModelForm):
+#     # photo = forms.ImageField(
+#     #     label = "Photo",
+#     #     widget=forms.ClearableFileInput(attrs={"mutiple":True}),
+#     # )
+#     #i = Photo._meta.pk.name
+#     class Meta:
+#         i = Photo._meta.pk.name
+#         model = Photo
+#         fields = [Photo.photo]
 
 
 
