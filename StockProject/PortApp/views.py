@@ -6,7 +6,12 @@ from PIL import ImageGrab
 #from .forms import PhotoForm
 #, StockForm
 from PortApp.models import Stocks,Prices,Exchanges,Currencies,Countries,Photos,Trades,Clients
+from django.shortcuts import render, get_object_or_404
+from rest_framework import generics
+from rest_framework.response import Response
 
+def is_valid(para):
+    return para != '' and para is not None
 
 def add_photo(request):
 
@@ -16,10 +21,29 @@ def add_photo(request):
 
 
 def filter_photo(request):
-    
+    trade = Trades.objects.all
+    ss = request.GET.get('stock_symbol')
+    trade_ID = request.GET.get('trade_ID')
+    DOT = request.GET.get('DOT')
+    out = request.GET.get('outcome')
+
+    if is_valid(ss):
+        trade.filter(stock__icontains=ss)
+
+    if is_valid(trade_ID):
+        trade.filter(id=trade_ID)
 
     
-    context={'trades':Trades}
+    if is_valid(DOT):
+        trade.filter(trade_date__icontains=DOT)
+
+    
+    if is_valid(out):
+        trade.filter(outcome=out)
+
+
+    
+    context={'trades':trade}
     return render(request,'PortApp/filter_photo.html',context)
 
 

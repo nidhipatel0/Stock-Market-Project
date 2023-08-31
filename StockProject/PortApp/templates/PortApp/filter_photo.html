@@ -13,77 +13,59 @@
 <body class="m-4">
     <div class='container'>
         <div class="row ">
-            <div class="col">
-            <h3>Filter Journals</h3>
+            <div class="col-auto">
+            <h3>Filter Photos</h3>
             <form method="GET" action=".">
-                <div class="form-group col-12">
-                    <div class="input-group">
-                        <input class="form-control py-2 border-right-0 border" type="search" name="stock_symbol" placeholder="Stock symbol" />
-                        <span class="input-group-append">
-                            <div class="input-group-text bg-transparent">
-                                <i class="fa fa-search"></i>
-                            </div>
-                        </span>
-                    </div>
-                </div>  
-
-                <div class="form-row">
-                    <div class="col-md-6 mb-3">
-                      <label for="validationServer03">Stock</label>
-                      <input type="text" class="form-control is-invalid" id="validationServer03" placeholder="Stock">
-                      <div class="invalid-feedback">
-                        Please provide a valid Stock.
-                      </div>
-                    </div>
-                </div>
-                <div class="input-group rounded">
-                    <input type="search" class="form-control rounded" placeholder="Search" aria-label="Search" aria-describedby="search-addon" />
-                    <span class="input-group-text border-0" id="search-addon">
-                      <i class="fas fa-search"></i>
-                    </span>
-                  </div>
-
-                <div class="row-pt-3 pb-3">
-                    <div class="form-group col-12">
-                        <div class="input-group ">
-                            <input class="form-control py-2 border-right-0 border" type="search" name="date_of_trade" placeholder="Date of trade" />
-                            <span class="input-group-append">
-                                <div class="input-group-text bg-transparent">
-                                    <i class="fa fa-search"></i>
-                                </div>
-                            </span>
-                        </div>
-                    </div>        
-                </div>
-
                 
-
-                
-                <div class="row-pt-3 pb-3">
-                    <div class="form-inline">
-                        <label class="my-1 mr-2" for="inlineFormCustomSelectPref">Preference</label>
-                        <select class="custom-select my-1 mr-sm-2" id="inlineFormCustomSelectPref">
-                            {% for out in trades.outcome %}
-                            <option value="{{ out }}">{{ out }}</option>
-                            {% endfor %}
-                        </select>
-                    </div>
-                </div>
-
 
                 <nav class="navbar navbar-expand-lg navbar-light ">
                     <div class="collapse navbar-collapse" id="navbarTogglerDemo03">
                         <form class="form-inline my-2 my-lg-0">
-                            <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+                            <input class="form-control mr-sm-2 is-invalid" type="search" id="validationServer03" name="stock_symbol" placeholder="Stock symbol" aria-label="Stock">
+                            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+                            <div class="invalid-feedback">
+                                Please provide a valid Stock.
+                            </div>
+                        </form>
+                    </div>
+                </nav>
+                
+                <nav class="navbar navbar-expand-lg navbar-light ">
+                    <div class="collapse navbar-collapse" id="navbarTogglerDemo03">
+                        <form class="form-inline my-2 my-lg-0">
+                            <input class="form-control mr-sm-2 is-invalid" type="search" id="validationServer03" name="trade_ID" placeholder="Trade ID" aria-label="Stock">
+                            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+                            <div class="invalid-feedback">
+                                Please provide a valid Stock.
+                            </div>
+                        </form>
+                    </div>
+                </nav>
+
+                <nav class="navbar navbar-expand-lg navbar-light ">
+                    <div class="collapse navbar-collapse" id="navbarTogglerDemo03">
+                        <form class="form-inline my-2 my-lg-0">
+                            <input class="form-control mr-sm-2" type="search" name="DOT" placeholder="Date of trade" aria-label="Search">
                             <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
                         </form>
                     </div>
                 </nav>
 
-
+                
+                
+                <div class="col-auto my-1">
+                    <label class="mr-sm-2" for="inlineFormCustomSelect">Outcome</label>
+                    <select class="custom-select mr-sm-2" name="outcome" id="inlineFormCustomSelect">
+                        <option selected>Choose</option>
+                        {% for out in trades %}
+                        <option value="{{ out.outcome }}">{{ out.outcome }}</option>
+                        {% endfor %}
+                    </select>
+                  </div>
+                
+                  {{trades.trade_type}}
 
                 
-            </div>
         </div>
     </div>
 </body>
