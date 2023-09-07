@@ -9,11 +9,23 @@
 
 </head>
 <body>
-    <div class="input-group rounded">
-        <input type="search" class="form-control rounded" placeholder="Search" aria-label="Search" aria-describedby="search-addon" />
-        <span class="input-group-text border-0" id="search-addon">
-          <i class="fas fa-search"></i>
-        </span>
-      </div>
+  <nav class="navbar navbar-expand-lg navbar-light ">
+    <div class="collapse navbar-collapse" id="navbarTogglerDemo03">
+        <form class="form-inline my-2 my-lg-0">
+            <input class="form-control mr-sm-2 is-invalid" type="search" id="validationServer03" name="j" placeholder="j" aria-label="j">
+            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+            <div class="invalid-feedback">
+                Please provide a valid Stock.
+            </div>
+        </form>
+    </div>
+  </nav>
+
+
+    {% for i in N%}
+    {{i.num}}
+    {{i.pos}}
+    {% endfor%}
+    
 </body>
 </html>

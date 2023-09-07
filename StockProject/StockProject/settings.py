@@ -41,7 +41,8 @@ INSTALLED_APPS = [
     'rest_framework',
     'corsheaders',
     'inspectdb_refactor',
-    'PortApp'
+    'PortApp',
+    'storages',
 ]
 
 MIDDLEWARE = [
@@ -84,7 +85,7 @@ DATABASES =  {
         "ENGINE": "django.db.backends.mysql",
         "NAME": "stockdb",
         "USER": "root",
-        "PASSWORD": "guluGULU(96",
+        "PASSWORD": "",
         "HOST": "127.0.0.1",
         "PORT": "3306",
     }
@@ -138,3 +139,16 @@ MEDIA_ROOT = BASE_DIR / 'static/images'
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+
+AWS_QUERYSTRING_AUTH = False
+DEFAULT_FILE_STORAGE = ''
+
+AWS_ACCESS_KEY_ID = ''
+AWS_SECRET_ACCESS_KEY = ''
+
+AWS_STORAGE_BUCKET_NAME = ''
+
+
+os.environ['AWS_ACCESS_KEY_ID'] = ''
+os.environ['AWS_SECRET_ACCESS_KEY'] = ''

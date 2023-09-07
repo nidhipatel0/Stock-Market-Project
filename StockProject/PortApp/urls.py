@@ -10,6 +10,7 @@ urlpatterns = [
     path('filter_photo/', views.filter_photo,name='filter_photo'),
     path('trade_photo/', views.trade_Photo,name='trade_Photo'),
     path('upload/', views.upload_photo, name='upload_photo'),
+    path('new_trade/', views.new_trade, name='new_trade'),
     #path('/admin/PortApp/photo/add',views.upload_photo,name = 'upload_photo'),
 
     #path('client', views.client, name='client'),

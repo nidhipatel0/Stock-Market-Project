@@ -48,15 +48,36 @@ class Exchanges(models.Model):
 
 
 class Photos(models.Model):
-    id = models.IntegerField(primary_key=True)
     photo = models.TextField()
     photo_date = models.DateField()
     photo_comment = models.CharField(max_length=1000, blank=True, null=True)
-    trade = models.ForeignKey('Trades', models.DO_NOTHING)
+    trade_id = models.IntegerField()
+    photo_response = models.CharField(max_length=500, blank=True, null=True)
 
     class Meta:
         managed = False
         db_table = 'photos'
+
+
+class PhotosCategory(models.Model):
+    id = models.BigAutoField(primary_key=True)
+    name = models.CharField(max_length=100)
+
+    class Meta:
+        managed = False
+        db_table = 'photos_category'
+
+
+class PhotosPhoto(models.Model):
+    id = models.BigAutoField(primary_key=True)
+    description = models.TextField()
+    image = models.CharField(max_length=500, blank=True, null=True)
+    category = models.ForeignKey(PhotosCategory, models.DO_NOTHING, blank=True, null=True)
+    im = models.CharField(max_length=500, blank=True, null=True)
+
+    class Meta:
+        managed = False
+        db_table = 'photos_photo'
 
 
 class Prices(models.Model):
@@ -86,13 +107,12 @@ class Stocks(models.Model):
 
 
 class Trades(models.Model):
-    id = models.CharField(primary_key=True, max_length=100)
     trade_comment = models.CharField(max_length=1000, blank=True, null=True)
     trade_date = models.DateField()
     position = models.CharField(max_length=45)
     outcome = models.CharField(max_length=45, blank=True, null=True)
     trade_type = models.CharField(max_length=45)
-    stock = models.ForeignKey(Stocks, models.DO_NOTHING)
+    stock_id = models.PositiveIntegerField()
     expiry = models.DateField(blank=True, null=True)
 
     class Meta:

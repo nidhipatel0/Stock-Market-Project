@@ -59,11 +59,11 @@ class Exchanges(models.Model):
 
 
 class Photos(models.Model):
-    id = models.IntegerField(primary_key=True)
     photo =  models.ImageField(null=False,blank=False)
     photo_date = models.DateField()
     photo_comment = models.CharField(max_length=1000, blank=True, null=True)
     trade = models.ForeignKey('Trades', models.DO_NOTHING)
+    photo_response = models.CharField(max_length=500, blank=True, null=True)
 
     class Meta:
         managed = False
@@ -92,7 +92,7 @@ class Stocks(models.Model):
     symbol = models.CharField(max_length=225)
     
     def __str__(self):
-        return self.name
+        return self.symbol
     
     class Meta:
         managed = False
@@ -109,7 +109,6 @@ trade_choices = (('normal','Normal'),('options','Options'),('futures','Futures')
 
 class Trades(models.Model):
     
-    id = models.CharField(primary_key=True, max_length=100)
     trade_comment = models.CharField(max_length=1000, blank=True, null=True)
     trade_date = models.DateField()
     position = models.CharField(max_length=45,choices=position_choices, blank=True, null=True)
@@ -120,8 +119,82 @@ class Trades(models.Model):
     expiry = models.DateField(blank=True, null=True)
 
     def __str__(self):
-        return self.id
+        return str(self.id)
 
     class Meta:
         managed = False
         db_table = 'trades'
+'''
+<div class="form-group m-3">
+                            <label>Trade comment</label>
+                            <input name="trade_comment" type="text" placeholder="Enter a comment" class="form-control">
+                            </div>
+                        
+                        <nav class="navbar navbar-expand-lg navbar-light ">
+                            <div class="collapse navbar-collapse" id="navbarTogglerDemo03">
+                                <form class="form-inline my-2 my-lg-0">
+                                    <input class="form-control mr-sm-2" type="date " name="trade_date" placeholder="Date of trade" aria-label="Search">
+                                    
+                                </form>
+                            </div>
+                        </nav>
+                    
+                        <div class="form-group m-3">
+                            <label class="mr-sm-2" for="inlineFormCustomSelect">position</label>
+                            <select class="custom-select mr-sm-2" type="text" name="position" id="inlineFormCustomSelect">
+                                <option selected>Choose</option>
+                                <option value="buy">Buy</option>
+                                <option value="sell">Sell</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group m-3">
+                            <label class="mr-sm-2" for="inlineFormCustomSelect">Outcome</label>
+                            <select class="custom-select mr-sm-2" type="text" name="outcome" id="inlineFormCustomSelect">
+                                <option selected>Choose</option>
+                                <option value="neutral">Neutral</option>
+                                <option value="success">Success</option>
+                                <option value="failed">Failed</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group m-3">
+                            <label class="mr-sm-2" for="inlineFormCustomSelect">Trade_type</label>
+                            <select class="custom-select mr-sm-2" type="text" name="trade_type" id="inlineFormCustomSelect">
+                                <option selected>Choose</option>
+                                <option value="normal">Normal</option>
+                                <option value="options">Options</option>
+                                <option value="futures">Futures</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group m-3">
+                            <label>Stock</label>
+                            <input name="stock" type="text" placeholder="Enter a stock" class="form-control">
+                            </div>
+
+                        <nav class="navbar navbar-expand-lg navbar-light ">
+                            <div class="collapse navbar-collapse" id="navbarTogglerDemo03">
+                                <form class="form-inline my-2 my-lg-0">
+                                    <input class="form-control mr-sm-2" type="date " name="expiry" placeholder="Date of trade" aria-label="Search">
+                                    
+                                </form>
+                            </div>
+                        </nav>
+
+                        <div class="form-group m-3">
+                            <label>Upload photo</label>
+                            <input name="photo" type="file" multiple class="form-control-file">
+                            </div>
+
+                            
+                        <nav class="navbar navbar-expand-lg navbar-light ">
+                            <div class="collapse navbar-collapse" id="navbarTogglerDemo03">
+                                <form class="form-inline my-2 my-lg-0">
+                                    <input class="form-control mr-sm-2" type="date " name="photo_date" placeholder="Date of trade" aria-label="Search">
+                                    
+                                </form>
+                            </div>
+                        </nav>
+                        
+                        '''
