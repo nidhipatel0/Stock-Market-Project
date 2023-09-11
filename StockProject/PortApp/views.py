@@ -11,6 +11,8 @@ from rest_framework.response import Response
 import time
 import boto3
 import re
+
+from django.db.models import Q
 def is_valid(para):
     return para != '' and para is not None
 
@@ -25,6 +27,12 @@ def add_photo(request):
 
     context={'trades':Trades.objects.all()}
     return render(request,'PortApp/add_photo.html',context)
+
+
+def dashboard(request):
+    #o = Photo.objects.get('comment,stock')
+    return render(request,'PortApp/base.html')
+
 
 def new_trade(request):
     trades = Trades.objects.all()
@@ -77,49 +85,60 @@ def new_trade(request):
 
 #Photos.objects.get(id=14).photo.decode()
 #submit not working..works for only photo_comment
+
+
+# stockID = Stocks.objects.filter(symbol=stock_symbol).values_list('id').distinct
+        # tradeStockID = Trades.objects.all().values_list('stock')
+        # stockId_list=[]
+
+        # for ID in tradeStockID:
+        #     if ID in stockID:
+        #         stockId_list.append(ID)
+
+        # filter_trade = Trades.objects.filter(stock__in=stockId_list)
+        
+
+
 def filter_photo(request):
     p = Photos.objects.all()
     
     t,filter_trade = Trades.objects.all(),Trades.objects.all()
     #to = t.filter((a, i) => t.findIndex((s) => a.age === s.age) === i)
     to = Trades.objects.all().values_list('outcome',flat=True).distinct()
-    print('to',to)
+    #print('to',to)
     stock_symbol = request.GET.get('stock_symbol')
     trade_ID = request.GET.get('trade_ID')
     DOT = request.GET.get('DOT')
     out = request.GET.get('outcome')
-    print(t.values())
+    #print(t.values())
     filter_trade=[]
+    if DOT == '':
+        DOT='a'
     if is_valid(stock_symbol):
-        stockID = Stocks.objects.filter(symbol=stock_symbol).values_list('id')
-        tradeStockID = Trades.objects.all().values_list('stock')
-        stockId_list=[]
+        s = Stocks.objects.filter(symbol=stock_symbol).values_list('id').distinct()
+        filter_stock = Trades.objects.filter(stock__in=s)
+    else:
+        s =''
+    # if is_valid(trade_ID):
 
-        for ID in tradeStockID:
-            if ID in stockID:
-                stockId_list.append(ID)
-
-        filter_trade = Trades.objects.filter(stock__in=stockId_list)
-        
-
-
-    if is_valid(trade_ID):
-
-        filter_trade = Trades.objects.filter(id=trade_ID)
-        print(filter_trade.all)
+    #     filter_trade_ID = Trades.objects.filter(id=trade_ID)
+    #     print(filter_trade.all)
         
 
     
-    if is_valid(DOT):
-        filter_trade = Trades.objects.filter(trade_date__icontains=DOT)
+    # if is_valid(DOT):
+    #     filter_DOT = Trades.objects.filter(trade_date__icontains=DOT)
 
     
-    if is_valid(out):
-        filter_trade = Trades.objects.filter(outcome=out)
-
+    # if is_valid(out):
+    #     filter_out = Trades.objects.filter(outcome=out)
+    try:
+        filter_trade = Trades.objects.filter(Q(id=trade_ID) | Q(stock__in=s) |Q(trade_date__icontains=DOT) | Q(outcome=out)) 
+    except ValueError:
+        pass
     if filter_trade!= []:
         l = filter_trade.values_list('id')
-        filter_photos = Photos.objects.filter(id__in=l)
+        filter_photos = Photos.objects.filter(trade__in=l)
         
         
         for filter_photo in filter_photos:
@@ -144,14 +163,7 @@ def filter_photo(request):
 
 
 
-def trade_Photo(request):
-    arr = [
-    {"name":"Joe", "age":17}, 
-    {"name":"Bob", "age":17}, 
-    {"name":"Carl", "age": 35}
-    ]
-    arr = arr.filter((a, i) == arr.findIndex((s) == a.age == s.age) == i)
-    print(arr)
+def trade_photo(request):
     context={}
     return render(request,'PortApp/trade_photo.html',context)
 
@@ -184,9 +196,7 @@ def upload_photo(request):
 
 def intro(request):
     return Hfilter_tradepResponse('Welcome to Awesome Website')
-def dashboard(request):
-    #o = Photo.objects.get('comment,stock')
-    pass
+
 
     # context = {'categories': Photo.portfolio_category,'photo': Photo.photo}
     # return render(request, "PortApp/add_photo.html", context)
