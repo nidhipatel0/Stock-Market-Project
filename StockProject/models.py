@@ -59,27 +59,6 @@ class Photos(models.Model):
         db_table = 'photos'
 
 
-class PhotosCategory(models.Model):
-    id = models.BigAutoField(primary_key=True)
-    name = models.CharField(max_length=100)
-
-    class Meta:
-        managed = False
-        db_table = 'photos_category'
-
-
-class PhotosPhoto(models.Model):
-    id = models.BigAutoField(primary_key=True)
-    description = models.TextField()
-    image = models.CharField(max_length=500, blank=True, null=True)
-    category = models.ForeignKey(PhotosCategory, models.DO_NOTHING, blank=True, null=True)
-    im = models.CharField(max_length=500, blank=True, null=True)
-
-    class Meta:
-        managed = False
-        db_table = 'photos_photo'
-
-
 class Prices(models.Model):
     stock = models.ForeignKey('Stocks', models.DO_NOTHING)
     timestamp = models.DateTimeField()
@@ -114,6 +93,7 @@ class Trades(models.Model):
     trade_type = models.CharField(max_length=45)
     stock_id = models.PositiveIntegerField()
     expiry = models.DateField(blank=True, null=True)
+    portfolio = models.CharField(max_length=100)
 
     class Meta:
         managed = False

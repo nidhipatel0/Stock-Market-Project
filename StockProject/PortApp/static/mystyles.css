@@ -2,3 +2,11 @@ body{
     background: beige;
     font-family: "Lato", sans-serif;
 }
+a {
+  text-decoration: none;
+  color: #111 ;
+}
+
+a:hover {
+  text-decoration: underline;
+}

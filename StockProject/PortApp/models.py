@@ -117,6 +117,8 @@ class Trades(models.Model):
     stock = models.ForeignKey(Stocks, models.DO_NOTHING)
     #stock = models.ForeignKey('Stock',  on_delete=models.SET_NULL, null=True, blank=True)
     expiry = models.DateField(blank=True, null=True)
+    
+    portfolio = models.CharField(max_length=100)
 
     def __str__(self):
         return str(self.id)

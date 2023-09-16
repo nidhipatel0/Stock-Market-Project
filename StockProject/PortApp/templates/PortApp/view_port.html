@@ -1,0 +1,43 @@
+{% extends 'PortApp/base.html' %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>View Portfolio</title>
+</head>
+<body>
+    
+{% block content%}
+<div class="container">
+    <h2>
+    <div class="row pb-5">
+        <div class="col">Portfolio value</div>
+        <div class="col">Investment value</div>
+        <div class="col">Profit/Loss Max</div>
+    </div>
+    </h2>
+
+    <h4>
+    <div class="row pb-2">
+        <div class="col">Portfolios </div>
+        <div class="col">Market value</div>
+        <div class="col">Profit/Loss Max</div>
+    </div>
+    </h3>
+    
+    {% for trade in trades %}
+    <div class="row pb-2">
+        <div class="col">
+            <a href="{%url 'view_trade' trade.id%}" >{{trade.stock}}</a>
+        </div>
+        <div class="col"> Market Value</div>
+        <div class="col">Profil/Loss max</div>
+    </div>
+    
+    {% endfor %}
+    
+</div>
+{% endblock %}
+</body>
+</html>

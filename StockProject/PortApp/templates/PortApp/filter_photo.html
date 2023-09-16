@@ -4,9 +4,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
     <title>Filter</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
     integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
+    <link rel="stylesheet" 
+          href=
+"https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
 
     <style>
         .image-thumbail {
@@ -18,6 +24,11 @@
             text-decoration: none;
             color: black;
         }
+        .btn {
+  -webkit-box-shadow: none;
+  -moz-box-shadow: none;
+  box-shadow: none;
+}
     </style>
 
 </head>
@@ -30,9 +41,15 @@
                 
             
                 <div class="form-group">
+
                     <label for="stock_symbol">stock_symbol</label>
+                    
+
                     <input type="text" id="stock_symbol" name="stock_symbol">
-                    <button type="submit" class="btn btn-primary">Submit</button>
+
+                    <button type="submit" class=".btn"><span class="bi bi-search"></span></button>
+                    
+
                     </div>
                 </div>
 
@@ -47,8 +64,8 @@
                     <label class="mr-sm-2" for="outcome">Outcome</label>
                     <select class="custom-select mr-sm-2" type="search" name="outcome" id="outcome">
                         <option selected>Choose</option>
-                        {% for out in to %}
-                        <option value="{{ out }}">{{ out }}</option>
+                        {% for outcome in outcomes %}
+                        <option value="{{ outcome }}">{{ outcome }}</option>
                         {% endfor %}
                         <input type="submit" value="Submit">
                     </select>

@@ -1,0 +1,44 @@
+{% extends 'PortApp/base.html' %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>View Trade</title>
+</head>
+<body>
+    
+{% block content%}
+<div class="container">
+    {{trades.stock}}
+    {{trades.trade_date}}
+    {% for photo in filter_photos %}
+                
+    <div class="col-md-4">
+        <div class="card my-2">
+            <img class="image-thumbail" src="{{photo.photo_response}}" alt="Card image cap">
+
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item">Comment: {{photo.photo_comment}}</li>
+                <li class="list-group-item">Photo upload date: {{photo.photo_date}}</li>
+                <li class="list-group-item">Stock: {{photo.trade.stock}}</li>
+                
+                
+            </ul>
+            <div class="card-body">
+                <li class="list-group-item">
+                    <a href="#" class="card-link">Card link</a>
+                    <a href="#" class="card-link">Another link</a>
+                </li>
+            </div>
+        </div>
+    </div>
+    {% empty %}
+    <h3>No photos</h3>
+    {% endfor %}
+    
+    
+</div>
+{% endblock %}
+</body>
+</html>
