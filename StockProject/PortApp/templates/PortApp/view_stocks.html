@@ -22,14 +22,16 @@
         <div class="col">Profit/Loss Max</div>
     </div>
 
+    {% for trade in trades %}
     <div class="row fs-5 pb-3">
         <div class="col">
-            <a href="{%url 'view_stocks' trades.stock%}" >{{trades.stock}}</a>
+            <a href="{%url 'view_trade' trade.id%}" >{{trade.stock}}</a>
         </div>
         <div class="col"> Market Value</div>
         <div class="col">Profil/Loss max</div>
     </div>
     
+    {% endfor %}
     
 </div>
 {% endblock %}

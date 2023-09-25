@@ -83,8 +83,8 @@ WSGI_APPLICATION = 'StockProject.wsgi.application'
 DATABASES =  {
     "default": {
         "ENGINE": "django.db.backends.mysql",
-        "NAME": "stockdb",
-        "USER": "root",
+        "NAME": "",
+        "USER": "",
         "PASSWORD": "",
         "HOST": "127.0.0.1",
         "PORT": "3306",
@@ -147,7 +147,7 @@ DEFAULT_FILE_STORAGE = ''
 AWS_ACCESS_KEY_ID = ''
 AWS_SECRET_ACCESS_KEY = ''
 
-AWS_STORAGE_BUCKET_NAME = 'mytradeapp'
+AWS_STORAGE_BUCKET_NAME = ''
 
 
 os.environ['AWS_ACCESS_KEY_ID'] = ''

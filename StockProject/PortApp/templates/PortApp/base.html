@@ -11,7 +11,6 @@
     integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
 
     <link rel="stylesheet" href="{% static 'styles.css' %}">
-  
 </head>
 <body>
     <header>
@@ -22,6 +21,7 @@
         <a href="#">My Trades</a>
         <a href="{% url 'filter_photo' %}">Search</a>
         <a href="#">Contact</a>
+        <a href="{% url 'new_trade' %}" class="btn btn-dark btn-block btn-sm m-1">Add Trade and Photo</a>
     </div>
     <div id="main">
         <button class="btn btn-dark btn-block btn-sm " onclick="openNav()">☰</button> 
@@ -40,38 +40,42 @@
         document.getElementById("main").style.marginLeft= "0";
         }
     </script>
-    <a href="{% url 'new_trade' %}" class="btn btn-dark btn-block btn-sm m-1">Add Trade and Photo</a>
+    
     </header>
 
 {% block content %}
 
 <div class="container">
-    <h2>
-    <div class="row pb-5">
+    
+    <div class="row fs-2  pb-5">
         <div class="col">Portfolio value</div>
         <div class="col">Investment value</div>
         <div class="col">Profit/Loss Max</div>
     </div>
-    </h2>
+    
+    <table class="table">
+        <thead>
+        <tr>
+            <th scope="col">Portfolios</th>
+            <th scope="col">Market value</th>
+            <th scope="col">Profit/Loss Max</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            {% for port in portfolios %}
+            <td><a href="{%url 'view_port' port%}" >{{port}}</a></td>
+            <td>2</td>
+            <td>3</td>
+            
+            {% endfor %}
+        </tr>
+        </tbody>
+    </table>
 
-    <h4>
-    <div class="row pb-2">
-        <div class="col">Portfolios </div>
-        <div class="col">Market value</div>
-        <div class="col">Profit/Loss Max</div>
-    </div>
-    </h3>
+
     
-    {% for port in portfolios %}
-    <div class="row pb-2">
-        <div class="col">
-            <a href="{%url 'view_port' port%}" >{{port}}</a>
-        </div>
-        <div class="col"> Market Value</div>
-        <div class="col">Profil/Loss max</div>
-    </div>
-    
-    {% endfor %}
+
     
 </div>
 {% endblock %}

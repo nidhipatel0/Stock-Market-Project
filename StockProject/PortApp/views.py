@@ -1,8 +1,22 @@
 from django.shortcuts import render,redirect
 #from django.hfilter_tradep import Hfilter_tradepResponse
 # Create your views here.
-
-from PIL import ImageGrab
+'''
+pip install django
+pip install django-admin
+pip install django-cors-headers
+pip install mysqlclient
+pip install slack
+pip install slack_sdk
+pip install tradingview_ta
+pip install django-inspectdb_refactor
+pip install django-rest_framework
+pip install boto3
+pip install django-storages
+pip install ImageGrab
+pip install Pillow
+'''
+#from PIL import ImageGrab
 #from .forms import PhotoForm
 #, StockForm
 from PortApp.models import Stocks,Prices,Exchanges,Currencies,Countries,Photos,Trades,Clients
@@ -31,8 +45,10 @@ def add_photo(request):
     context={'trades':Trades.objects.all()}
     return render(request,'PortApp/add_photo.html',context)
 
+def recommendations(request):
+    pass
 
-def dashboard(request):
+def dashboard(request):#1
     trades= Trades.objects.all()
     portfolios = Trades.objects.all().values_list('portfolio',flat=True).distinct()
     context = {'trades':trades,'portfolios':portfolios}
@@ -40,17 +56,22 @@ def dashboard(request):
     return render(request,'PortApp/base.html',context)
 
 
-def view_port(request,pk):
-    trades= Trades.objects.filter(portfolio=pk)
-    context = {'trades':trades,}
+def view_port(request,port):#2
+    trades= Trades.objects.filter(portfolio=port)
+    context = {'trades':trades[0],}
     return render(request,'PortApp/view_port.html',context)
 
+def view_stocks(request,sk):#3
+    stocks = Stocks.objects.filter(symbol=sk)
+    trades= Trades.objects.filter(stock__in=stocks) #t = Trades.objects.all()...t[0].stock #APPL
+    context = {'trades':trades,}
+    return render(request,'PortApp/view_stocks.html',context)
 
 
-def view_trade(request,pk):
+def view_trade(request,pk):#4
     trades= Trades.objects.get(id=pk)
     filter_photos = Photos.objects.filter(trade=trades.id)
-
+    stocks = Stocks.objects.get(symbol=trades.stock)
     for filter_photo in filter_photos:
         key = filter_photo.photo.decode()
         response = boto3.client('s3').generate_presigned_url('get_object',
@@ -61,12 +82,17 @@ def view_trade(request,pk):
         Photos.objects.filter(photo = key).update(photo_response = response)#only decoded photo name works
     
     try:
-        context={'trades':trades,'filter_photos':filter_photos}
+        context={'trades':trades,'stocks':stocks,'filter_photos':filter_photos}
 
     except:
-        context={'trades':trades}
+        context={'trades':trades,'stocks':stocks}
 
     return render(request,'PortApp/view_trade.html',context)
+
+def view_photo(request,pk):
+    photo= Photos.objects.get(id=pk)
+    context = {'photo':photo,}
+    return render(request,'PortApp/view_port.html',context)
 
 
 def new_trade(request):
